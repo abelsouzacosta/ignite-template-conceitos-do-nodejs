@@ -29,6 +29,13 @@ app.post('/users', (request, response) => {
 
   const id = uuid();
 
+  const userAlreadyExists = users.find(user => user.username === username);
+
+  if (userAlreadyExists)
+    return response.status(400).json({
+      error: `User already exists`
+    });
+
   const user = {
     id,
     name,
@@ -125,7 +132,7 @@ app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
 
   user.todos.splice(todoIdToDelete, 1);
 
-  return response.status(200).json(user);
+  return response.status(204);
 });
 
 module.exports = app;
