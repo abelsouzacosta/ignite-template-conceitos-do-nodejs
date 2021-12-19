@@ -17,14 +17,12 @@ function checksExistsUserAccount(request, response, next) {
 
   const user = users.find(user => user.username === username);
 
-  console.log(users, user, username);
-
   if (!user)
     return response.status(404).json({
       error: "User not found"
     });
 
-  request.user = user;
+  request.username = user.username;
 
   return next();
 }
